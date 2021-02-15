@@ -3,6 +3,11 @@ import numpy as np
 from datetime import datetime
 from statsmodels.tsa.stattools import adfuller
  
+#Criar DataFrame a partir de um dicionário
+dict_meses = {'Mês':['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+                     'Trimestre':['1','1','1','2','2','2','3','3','3','4','4','4']}
+df_meses = pd.DataFrame(dict_meses, columns=['Mês','Trimestre'])
+
 #Importando o DataFrame de um caminho específico (para fins desse exemplo, considerar um df com as colunas 'coluna01','coluna02','data','valor')
 df = pd.read_csv('/filepath, 
                   encoding='utf-16',
@@ -43,8 +48,15 @@ for(i,j) in df02.iterrows():
                    (df['coluna02']==filtro_02)].drop(columns=['coluna01','coluna02'])
   analisar_DataFrame(df_filtrada)
             
-#Agrupar df por uma coluna específica e executar múltiplos cálculos com a coluna de valores
+#Agrupar df por uma coluna específica e executar operações matemáticas
 df.groupby('coluna01')['valor'].agg(['count','sum','mean','std','median','min','max'])
+
+#Mergir duas bases de dados a partir de um ou mais colunas como referência
+df_mergido01 = pd.merge(df01, df02, on=['coluna01','coluna02','coluna03'],how='left') #tomando como referência o df01
+df_mergido02 = pd.merge(df01, df02, on=['coluna01','coluna02','coluna03'],how='right') #tomando como referência o df02
+df_mergido03 = pd.merge(df01, df02, on=['coluna01','coluna02','coluna03'],how='inner') #tomando como referência os valores presentes em ambos
+df_mergido04 = pd.merge(df01, df02, on=['coluna01','coluna02','coluna03'],how='outer') #tomando como referência os valores que um não tem igual no outro
+df_mergido05 = pd.concat([df01, df02]) #unindo todos os valores de df01 e df02
 
 #Convertendo uma coluna do formato 'dd/mm/aaaa - 01/01/2000' para um datetime
 df['Ano'] = df['Data'].astype(str).str[6:]
@@ -53,6 +65,7 @@ df['Dia'] = df['Data'].astype(str).str[:2]
 
 df['Data_Convertida'] = pd.to_datetime(df['Ano']+'-'+df['Mes']+'-'+df['Dia'],
                                        format='%Y-%m-%d')
+
 
 #Utilizar mais de uma coluna como index
 df.set_index(['coluna01','coluna02'])
@@ -72,6 +85,7 @@ df03 = df.resample('15D').apply(operacoes).add.add_suffix('_quinzenal')
 df03 = df.resample('M').apply(operacoes).add.add_suffix('_mensal')
 df03 = df.resample('B').apply(operacoes).add.add_suffix('_bimestral')
 df03 = df.resample('Q').apply(operacoes).add.add_suffix('_trimestral')
+
 
 #Converter para DataFrame
 df04 = pd.DataFrame(df03)
