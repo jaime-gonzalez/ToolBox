@@ -18,6 +18,9 @@ df = pd.read_csv('/filepath,
 #Eliminar duplicatas de cima pra baixo
 df02 = df01.drop_duplicates(keep='first')          
 
+#Eliminar colunas
+df = df.drop(columns=['coluna01'])
+
 #Criar uma lista vazia
 lista01 = []
 
@@ -51,7 +54,7 @@ for(i,j) in df02.iterrows():
 #Agrupar df por uma coluna específica e executar operações matemáticas
 df.groupby('coluna01')['valor'].agg(['count','sum','mean','std','median','min','max'])
 
-#Mergir duas bases de dados a partir de um ou mais colunas como referência
+#Mergir duas bases de dados a partir de uma ou mais colunas como referência
 df_mergido01 = pd.merge(df01, df02, on=['coluna01','coluna02','coluna03'],how='left') #tomando como referência o df01
 df_mergido02 = pd.merge(df01, df02, on=['coluna01','coluna02','coluna03'],how='right') #tomando como referência o df02
 df_mergido03 = pd.merge(df01, df02, on=['coluna01','coluna02','coluna03'],how='inner') #tomando como referência os valores presentes em ambos
