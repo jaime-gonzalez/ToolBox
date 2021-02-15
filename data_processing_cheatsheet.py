@@ -19,7 +19,9 @@ df = pd.read_csv('/filepath,
                   sep=';',
                   squeeze=True,
                   header=infer)
-                  
+#Gravar o DataFrame em um local específico, num formato desejado
+df.to_csv('/filepath/name.csv',)
+
 #Converter para DataFrame (ex: quando se tem uma série e se quer mudar para DataFrame)
 df = pd.DataFrame(series)
 
@@ -32,8 +34,8 @@ df.reset_index()
 #Transformar um DataFrame em uma série temporal (transformando a data em index)
 series = df.set_index('data')
 
-#Eliminar duplicatas mantendo o primeiro e eliminando o último
-df02 = df01.drop_duplicates(keep='first')          
+#Eliminar duplicatas mantendo o primeiro e eliminando o último, tomando como referência duas colunas específicas e ignorando o index
+df02 = df01.drop_duplicates(igonre_index = True, subset=['coluna01','coluna02'], keep='first')          
 
 #Eliminar colunas
 df = df.drop(columns=['coluna01'])
