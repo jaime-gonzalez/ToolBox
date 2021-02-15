@@ -72,3 +72,9 @@ df03 = df.resample('15D').apply(operacoes).add.add_suffix('_quinzenal')
 df03 = df.resample('M').apply(operacoes).add.add_suffix('_mensal')
 df03 = df.resample('B').apply(operacoes).add.add_suffix('_bimestral')
 df03 = df.resample('Q').apply(operacoes).add.add_suffix('_trimestral')
+
+#Converter para DataFrame
+df04 = pd.DataFrame(df03)
+
+#Agregação por mês
+df05 = df04.assign(month=lambda df: df.index.month).groupby('month')['_semanal'].agg(['mean','std','median','min','max'])
