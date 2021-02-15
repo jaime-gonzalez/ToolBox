@@ -1,8 +1,10 @@
 import pandas as pd
+import numpy as np
+from datetime import datetime
 from statsmodels.tsa.stattools import adfuller
  
 #Importando o DataFrame de um caminho específico (para fins desse exemplo, considerar um df com as colunas 'coluna01','coluna02','data','valor')
-df = pd.read_csv('\filepath, 
+df = pd.read_csv('/filepath, 
                   encoding='utf-16',
                   sep=';',
                   squeeze=True,
@@ -44,12 +46,29 @@ for(i,j) in df02.iterrows():
 #Agrupar df por uma coluna específica e executar múltiplos cálculos com a coluna de valores
 df.groupby('coluna01')['valor'].agg(['count','sum','mean','std','median','min','max'])
 
-#Transformar um DataFrame em uma série temporal (transformadno a data em index)
-df.set_index('data')
+#Convertendo uma coluna do formato 'dd/mm/aaaa - 01/01/2000' para um datetime
+df['Ano'] = df['Data'].astype(str).str[6:]
+df['Mes'] = df['Data'].astype(str).str[3:5]
+df['Dia'] = df['Data'].astype(str).str[:2]
 
-#Resetar o index da série temporal
-df.reset_index()
+df['Data_Convertida'] = pd.to_datetime(df['Ano']+'-'+df['Mes']+'-'+df['Dia'],
+                                       format='%Y-%m-%d')
 
 #Utilizar mais de uma coluna como index
 df.set_index(['coluna01','coluna02'])
-          
+
+#Resetar o index, transformando novamente em valor
+df.reset_index()
+
+#Transformar um DataFrame em uma série temporal (transformando a data em index)
+df.set_index('data')
+
+#Redimensionamento de uma série temporal por unidades de tempo, aplicando multiplas operações da classe numpy
+operacoes = [np.mean,np.sum,np.std,np.max,np.min,np.count]
+
+df03 = df.resample('B').apply(operacoes).add.add_suffix('_businessDay')
+df03 = df.resample('W').apply(operacoes).add.add_suffix('_semanal')
+df03 = df.resample('15D').apply(operacoes).add.add_suffix('_quinzenal')
+df03 = df.resample('M').apply(operacoes).add.add_suffix('_mensal')
+df03 = df.resample('B').apply(operacoes).add.add_suffix('_bimestral')
+df03 = df.resample('Q').apply(operacoes).add.add_suffix('_trimestral')
