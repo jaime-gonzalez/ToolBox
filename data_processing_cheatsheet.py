@@ -44,6 +44,9 @@ df = df.drop(columns=['coluna01'])
 df = df[(df['coluna01']=='termo_filtrado_01')&
           df['coluna02']=='termo_filtrado_02')]
 
+#Filtrar um DataFrame deixando apenas valores menores ou iguais a determinado numero (útil para séries temporais ou groupby)
+df_filtrado = df[df<=100000]
+
 #Agrupar df por uma coluna específica e executar operações matemáticas
 df.groupby('coluna01')['valor'].agg(['count','sum','mean','std','median','min','max'])
 
