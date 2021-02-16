@@ -49,3 +49,12 @@ plt.plot(db[:, 0],label = 'Dados Originais')
 plt.plot(forecast, label = 'Previsão')
 plt.legend()
 plt.show()
+
+
+#Componentes da Série Temporal: Decompor a série em Tendência, Sazonalidade e Resídual
+from statsmodels.tsa.seasonal import seasonal_decompose
+
+data = df['valor']      #precisa ser uma série temporal
+result = seasonal_decompose(data, model='multiplicative')
+result.plot()
+plt.show()
