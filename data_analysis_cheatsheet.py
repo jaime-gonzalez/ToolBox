@@ -50,7 +50,6 @@ plt.plot(forecast, label = 'Previsão')
 plt.legend()
 plt.show()
 
-
 #Componentes da Série Temporal: Decompor a série em Tendência, Sazonalidade e Resídual
 from statsmodels.tsa.seasonal import seasonal_decompose
 
@@ -58,3 +57,27 @@ data = df['valor']      #precisa ser uma série temporal
 result = seasonal_decompose(data, model='multiplicative')
 result.plot()
 plt.show()
+
+#Teste de dickey fuller aumentado (p/ checar estacionariedade de séries temporais): quando p <0,05, é estacionária
+from statsmodels.tsa.stattools import adfuller
+x = df['valor']      #precisa ser uma série temporal - Data como index e coluna de valor
+def adf_test(x):
+    # perform Augmented Dickey Fuller test
+    print('Resutaldo do Teste Dickey-Fuller:')
+    dftest = adfuller(y, autolag='AIC')
+    dfoutput = pd.Series(dftest[0:4], index=['Teste', 'Valor p', '# de lags', '# de observações'])
+    for key, value in dftest[4].items():
+        dfoutput['Valores Críticos ({})'.format(key)] = value
+    print(dfoutput)
+adf_test(x)
+
+#Aplicando uma escala logarítmica na série para para torna-la estacionária
+import numpy as np
+data = df['valor']
+d_log=np.log(data)
+
+#Diferenciar uma série temporal para torna-la estacionária por diferenciação (aplicar o ADF na nova série. Se não estiver estacionária, aplicar novamente).
+import numpy as np
+x = df['valor']      #precisa ser uma série temporal - Data como index e coluna de valor
+x_diff = np.diff(x)
+
