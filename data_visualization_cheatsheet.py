@@ -55,3 +55,11 @@ df.resample('M').apply([np.mean]).plot()
 plt.title('Título do gráfico')
 plt.ylabel('Rótulo do eixo y')
 plt.xlabel('Rótulo do eixo x')
+
+#Gráficos de bloxplot com Seaborn (Possível utilizar como X múltiplos grupos de dados, para avaliar a variação dentro dos grupos)
+df['Faixa', 'Valor']
+ax = sns.boxplot(y=df['Valor'], 
+                 x=df['Faixa'], 
+                 data=df,
+                 palette="coolwarm")     #Para mais paletas de cores, https://seaborn.pydata.org/tutorial/color_palettes.html
+ax.set_xticklabels(ax.get_xticklabels(),rotation=45)
