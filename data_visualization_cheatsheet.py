@@ -63,3 +63,29 @@ ax = sns.boxplot(y=df['Valor'],
                  data=df,
                  palette="coolwarm")     #Para mais paletas de cores, https://seaborn.pydata.org/tutorial/color_palettes.html
 ax.set_xticklabels(ax.get_xticklabels(),rotation=45)
+
+
+
+#Plotar Matriz de correlação com uma única paleta de cores
+# library & dataset
+import matplotlib.pyplot as plt
+import seaborn as sns
+df = sns.load_dataset('iris')
+# with regression
+sns.pairplot(df, kind="reg")
+plt.show()
+# without regression
+sns.pairplot(df, kind="scatter")
+plot.show()
+
+#Plotar Matriz de correlação com paletas de cores p/ os diferentes grupos de dados
+# library & dataset
+import matplotlib.pyplot as plt
+import seaborn as sns
+df = sns.load_dataset('iris')
+# left
+sns.pairplot(df, kind="scatter", hue="species", markers=["o", "s", "D"], palette="Set2")
+plt.show()
+# right: you can give other arguments with plot_kws.
+sns.pairplot(df, kind="scatter", hue="species", plot_kws=dict(s=80, edgecolor="white", linewidth=2.5))
+plt.show()
