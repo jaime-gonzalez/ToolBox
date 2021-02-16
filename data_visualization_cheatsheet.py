@@ -1,7 +1,10 @@
-
+"""         
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+            Visualizações de Dados com Seaborn e Matplotlib
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+"""
 
 #Plotar mapa de calor - é preciso eliminar as colunas de texto e manter apenas as de valores
-
 import seaborn as sns
 
 df['coluna01', 'coluna02', 'coluna03', 'valor01', 'valor02', 'valor03', 'valor04']
@@ -13,10 +16,8 @@ sns.heatmap(df_filtrado.corr(),annot=True,
 plt.show()
 
 
-#Gráfico de dispersão 'Scatterplot', com as colunas do valor =_x e valor_y
-
+#Gráfico de dispersão 'Scatterplot', com as colunas dos  valores de eixos x e y
 import matplotlib.pyplot as plt
-
 plt.plot(df['valor01'], df['valor02'], 'o', color='blue');
 plt.title('Título', size = 20)
 plt.xlabel('Rótulo de x',size=16)
@@ -50,7 +51,6 @@ ax.set_xlabel('Mês')
 
 #Plotar resample de uma série temporal com base no período
 df_filtrado = df['data','valor']
-
 df.resample('M').apply([np.mean]).plot()
 plt.title('Título do gráfico')
 plt.ylabel('Rótulo do eixo y')
