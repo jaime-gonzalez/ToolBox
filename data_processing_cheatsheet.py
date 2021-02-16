@@ -80,6 +80,17 @@ df['Dia'] = df['Data'].astype(str).str[:2]
 df['Data_Convertida'] = pd.to_datetime(df['Ano']+'-'+df['Mes']+'-'+df['Dia'],
                                        format='%Y-%m-%d')
 
+#Outros formatos de datas mais comuns
+from datetime import datetime
+dt = datetime(year=2000,month=12,day=24)
+
+from dateutil import parser
+date = parser.parse('24 of December, 2000')
+
+import numpy as np
+date2 = np.array('2000-12-24', dtype=np.datetime64)
+dateArray = date2 + np.arange(12)
+
 
 
 """
@@ -108,6 +119,7 @@ def analisar_DataFrame(dataset):
                    adfResult[4]['5%'],
                    adfResult[4]['1%']
                    )                 
+
 #Filtro dinâmico, filtrando as informações de um df com as de um df02, e aplicando uma função para cada conjunto de valores no novo DataFrame
 for(i,j) in df02.iterrows():
   filtro_01 = j.loc['coluna01']
