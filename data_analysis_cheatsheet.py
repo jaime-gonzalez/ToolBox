@@ -11,3 +11,5 @@ resA1 = df.groupby(['Coluna01','Coluna02'])['Valor'].quantile([0.05]) #Quantil p
 resA2 = df.groupby(['Coluna01','Coluna02'])['Valor'].quantile([0.95]) #Quantil p/ limite superior até 95% da distribuição normal (2 desvios padrões)
 res = pd.merge(resA1, resA2, on = ['Coluna01','Coluna02'], how = 'left',suffixes=('_Lim. Inf','_Lim. Sup'))
 
+
+
