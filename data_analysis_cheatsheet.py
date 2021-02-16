@@ -60,8 +60,8 @@ plt.show()
 
 #Teste de dickey fuller aumentado (p/ checar estacionariedade de séries temporais): quando p <0,05, é estacionária
 from statsmodels.tsa.stattools import adfuller
-x = df['valor']      #precisa ser uma série temporal - Data como index e coluna de valor
-def adf_test(x):
+y = df['valor']      #precisa ser uma série temporal - Data como index e coluna de valor
+def adf_test(y):
     # perform Augmented Dickey Fuller test
     print('Resutaldo do Teste Dickey-Fuller:')
     dftest = adfuller(y, autolag='AIC')
@@ -69,7 +69,7 @@ def adf_test(x):
     for key, value in dftest[4].items():
         dfoutput['Valores Críticos ({})'.format(key)] = value
     print(dfoutput)
-adf_test(x)
+adf_test(y)
 
 #Aplicando uma escala logarítmica na série para para torna-la estacionária
 import numpy as np
