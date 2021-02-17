@@ -22,6 +22,9 @@ df = pd.read_csv('/filepath,
 #Gravar o DataFrame em um local específico, num formato desejado
 df.to_csv('/filepath/name.csv',)
 
+#Filtrar df com termo específico usando o método '.query'
+novo_df = df.query('Coluna_01=="Termo_filtrado"')
+
 #Converter para DataFrame (ex: quando se tem uma série e se quer mudar para DataFrame)
 df = pd.DataFrame(series)
 
